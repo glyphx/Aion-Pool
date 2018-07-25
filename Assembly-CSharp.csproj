@@ -56,10 +56,8 @@
   <ItemGroup>
     <Compile Include="Assets\ConsolePro\ConsoleProDebug.cs" />
     <Compile Include="Assets\Scripts\AionJsonFormat.cs" />
-    <Compile Include="Assets\Scripts\DropdownLoader.cs" />
-    <None Include="Assets\JsonDotNet\link.xml">
-      <SubType>Designer</SubType>
-    </None>
+    <Compile Include="Assets\Scripts\AionJsonData.cs" />
+    <None Include="Assets\JsonDotNet\link.xml" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/glyph/Desktop/Aion Pool/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
