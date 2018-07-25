@@ -9,10 +9,12 @@ using AionJsonFormat;
 public class DropdownLoader : MonoBehaviour
 {
     public UnityEngine.UI.Dropdown rigsDropList;  // Use this for initialization
-    string[] keys = new string[100];
-    Worker[] workers = new Worker[100];
-    string[,] mKeys = new string[100,100];
-    Worker[,] mWorkers = new Worker[100,100];
+
+    List<string> lPerformanceSampleKeys = new List<string>();
+    List<string> lPerformanceKeys = new List<string>();    
+    List<Worker> lPerformanceWorkers = new List<Worker>();
+    List<Worker> lPerformanceSampleWorkers = new List<Worker>();
+    //List<List<Worker>> llWorkers = new List<List<Worker>>();
 
     void Start()
     {
@@ -39,41 +41,35 @@ public class DropdownLoader : MonoBehaviour
                     Debug.Log(jsonResult);
                     var root = Root.FromJson(jsonResult);
                     Debug.Log(root.Performance.Created);  //Most recent Creation date. Create variable -24hours
-                    int count = 0;
-                    foreach (KeyValuePair<string, Worker> kvp in root.Performance.Workers)
+                    
+                    foreach (KeyValuePair<string, Worker> workers in root.Performance.Workers)
                     {
-                        keys[count] = kvp.Key;
-                        workers[count] = kvp.Value;
-                        count++;
-                    }
-                   // Debug.Log(keys[1]);
-                   // Debug.Log(workers[1].SharesPerSecond);
-
-                    count = 0;
-                    int element = 0;
+                        lPerformanceKeys.Add(workers.Key);
+                        lPerformanceWorkers.Add(workers.Value);                        
+                    }                  
+                    
                     foreach (Performance sample in root.PerformanceSamples)
-                    {
-                        int loopcounter = 0;
-                        
-                        foreach (KeyValuePair<string, Worker> kvp in sample.Workers)
+                    {                       
+                        foreach (KeyValuePair<string, Worker> workers in sample.Workers)
                         {
-                            loopcounter++;
-                            Debug.Log(loopcounter);
-                            
-                            Debug.Log(kvp.Key);
-                            mKeys[count, element] = kvp.Key;
-                            mWorkers[count, element] = kvp.Value;
-                            element++;
-                            Debug.Log(count +"element" + element);
-                        }
-                        count++;
-                        element = 0;
+                            lPerformanceSampleKeys.Add(workers.Key);
+                            lPerformanceSampleWorkers.Add(workers.Value);                                                    
+                        }                       
                     }
-                    Debug.Log(mWorkers[0, 0].SharesPerSecond);
-                    //Debug.Log(mWorkers[3, 1].SharesPerSecond);
-                    Debug.Log(mWorkers[3, 4].SharesPerSecond);
-                    Debug.Log(mWorkers[4, 3].SharesPerSecond);
 
+                    foreach (Worker now in lPerformanceWorkers)
+                    {                        
+                        Debug.Log(now.SharesPerSecond);
+                        Debug.Log(now.Hashrate);
+                    }
+
+                    foreach (Worker sample in lPerformanceSampleWorkers)
+                    {
+                        Debug.Log(sample.SharesPerSecond);
+                        Debug.Log(sample.Hashrate);
+                    }
+
+                                  
 
                     /*  Debug.Log(mkeys[0, 0]);
                       rigsDropList.options.AddRange(
