@@ -5,15 +5,21 @@ using UnityEngine.Networking;
 using System.Linq;
 using System.Linq.Expressions;
 using AionJsonFormat;
+using System;
 
 public class DropdownLoader : MonoBehaviour
 {
     public UnityEngine.UI.Dropdown rigsDropList;  // Use this for initialization
 
+    List<DateTimeOffset> lPerformanceSampleCreatedTime = new List<DateTimeOffset>();
     List<string> lPerformanceSampleKeys = new List<string>();
     List<string> lPerformanceKeys = new List<string>();    
     List<Worker> lPerformanceWorkers = new List<Worker>();
-    List<Worker> lPerformanceSampleWorkers = new List<Worker>();
+    List<Worker> lPerformanceSampleWorkers = new List<Worker>();    
+    List<double> lPerfSamWorkerShares = new List<double>();
+    List<double> lPerfSamWorkerHashrate = new List<double>();
+    List<double> lPerfWorkerShares = new List<double>();
+    List<double> lPerfWorkerHashrate = new List<double>();
     //List<List<Worker>> llWorkers = new List<List<Worker>>();
 
     void Start()
@@ -44,31 +50,39 @@ public class DropdownLoader : MonoBehaviour
                     
                     foreach (KeyValuePair<string, Worker> workers in root.Performance.Workers)
                     {
-                        lPerformanceKeys.Add(workers.Key);
+                        Debug.Log(workers.Key);
+                        lPerformanceKeys.Add(workers.Key);                        
                         lPerformanceWorkers.Add(workers.Value);                        
                     }                  
                     
                     foreach (Performance sample in root.PerformanceSamples)
-                    {                       
+                    {
+                        lPerformanceSampleCreatedTime.Add(sample.Created);
+                        Debug.Log(sample.Created);
                         foreach (KeyValuePair<string, Worker> workers in sample.Workers)
-                        {
+                        {                            
                             lPerformanceSampleKeys.Add(workers.Key);
-                            lPerformanceSampleWorkers.Add(workers.Value);                                                    
+                            Debug.Log(workers.Key);
+                            lPerformanceSampleWorkers.Add(workers.Value);                            
                         }                       
                     }
 
                     foreach (Worker now in lPerformanceWorkers)
                     {                        
+                        lPerfWorkerShares.Add(now.SharesPerSecond);
+                        lPerfWorkerHashrate.Add(now.Hashrate);
                         Debug.Log(now.SharesPerSecond);
                         Debug.Log(now.Hashrate);
                     }
 
                     foreach (Worker sample in lPerformanceSampleWorkers)
                     {
+                        lPerfSamWorkerShares.Add(sample.SharesPerSecond);
+                        lPerfSamWorkerHashrate.Add(sample.Hashrate);
                         Debug.Log(sample.SharesPerSecond);
                         Debug.Log(sample.Hashrate);
                     }
-
+                    
                                   
 
                     /*  Debug.Log(mkeys[0, 0]);
