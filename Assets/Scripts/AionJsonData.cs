@@ -1,14 +1,12 @@
-﻿using System.Collections;
+﻿using AionJsonFormat;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using AionJsonFormat;
-using System;
 
 public class AionJsonData : MonoBehaviour
 {
-    public UnityEngine.UI.Dropdown rigsDropList;  // Use this for initialization
-
     List<DateTimeOffset> lPerformanceSampleCreatedTime = new List<DateTimeOffset>();
     List<string> lPerformanceSampleKeys = new List<string>();
     List<string> lPerformanceKeys = new List<string>();    
@@ -21,9 +19,7 @@ public class AionJsonData : MonoBehaviour
     //List<List<Worker>> llWorkers = new List<List<Worker>>();
 
     void Start()
-    {
-        rigsDropList = GetComponent<UnityEngine.UI.Dropdown>();
-        //rigsDropList.ClearOptions();
+    {        
         string url = "https://aionmine.org:22200/api/pools/aion/miners/a09d458d49326f6f0e7722d22c668b55809a66ad175f5f796b96bab16889eb3d";
         UnityWebRequest www = UnityWebRequest.Get(url);
         StartCoroutine(enumerateAionJsonData(www));
@@ -41,11 +37,15 @@ public class AionJsonData : MonoBehaviour
             {
                 if (www.isDone)
                 {
-                    string jsonResult = System.Text.Encoding.UTF8.GetString(www.downloadHandler.data);
+                    var jsonResult = System.Text.Encoding.UTF8.GetString(www.downloadHandler.data);
                     Debug.Log(jsonResult);
                     var root = Root.FromJson(jsonResult);
-                    Debug.Log(root.Performance.Created);  //Most recent Creation date. Create variable -24hours
-                    
+                    Debug.Log(
+                        root.PendingBalance + "\n" +
+                        root.PendingShares + "\n" +
+                        root.LastPayment + "\n" +
+                        root.Performance.Created); //Most recent Creation date. Create variable -24hours
+
                     foreach (KeyValuePair<string, Worker> workers in root.Performance.Workers)
                     {
                         Debug.Log(workers.Key);
@@ -69,16 +69,14 @@ public class AionJsonData : MonoBehaviour
                     {                        
                         lPerfWorkerShares.Add(now.SharesPerSecond);
                         lPerfWorkerHashrate.Add(now.Hashrate);
-                        Debug.Log(now.SharesPerSecond);
-                        Debug.Log(now.Hashrate);
+                        Debug.Log(now.SharesPerSecond + "\n" + now.Hashrate);                        
                     }
 
                     foreach (Worker sample in lPerformanceSampleWorkers)
                     {
                         lPerfSamWorkerShares.Add(sample.SharesPerSecond);
                         lPerfSamWorkerHashrate.Add(sample.Hashrate);
-                        Debug.Log(sample.SharesPerSecond);
-                        Debug.Log(sample.Hashrate);
+                        Debug.Log(sample.SharesPerSecond + "\n" + sample.Hashrate);
                     }                 
                 }
             }
