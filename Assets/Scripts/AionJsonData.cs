@@ -9,25 +9,25 @@ namespace AionJsonData
 {
     public class AionJsonData : MonoBehaviour
     {
-        List<DateTimeOffset> lPerformanceSampleCreatedTime = new List<DateTimeOffset>();
-        List<string> lPerformanceSampleKeys = new List<string>();
-        List<string> lPerformanceKeys = new List<string>();
-        List<Worker> lPerformanceWorkers = new List<Worker>();
-        List<Worker> lPerformanceSampleWorkers = new List<Worker>();
-        List<double> lPerfSamWorkerShares = new List<double>();
-        List<double> lPerfSamWorkerHashrate = new List<double>();
-        List<double> lPerfWorkerShares = new List<double>();
-        List<double> lPerfWorkerHashrate = new List<double>();
+        public List<DateTimeOffset> lPerformanceSampleCreatedTime = new List<DateTimeOffset>();
+        public List<string> lPerformanceSampleKeys = new List<string>();
+        public List<string> lPerformanceKeys = new List<string>();
+        public List<Worker> lPerformanceWorkers = new List<Worker>();
+        public List<Worker> lPerformanceSampleWorkers = new List<Worker>();
+        public List<double> lPerfSamWorkerShares = new List<double>();
+        public List<double> lPerfSamWorkerHashrate = new List<double>();
+        public List<double> lPerfWorkerShares = new List<double>();
+        public List<double> lPerfWorkerHashrate = new List<double>();
         //List<List<Worker>> llWorkers = new List<List<Worker>>();
 
-        void Start()
+        private void Start()
         {
             string url = "https://aionmine.org:22200/api/pools/aion/miners/a09d458d49326f6f0e7722d22c668b55809a66ad175f5f796b96bab16889eb3d";
             UnityWebRequest www = UnityWebRequest.Get(url);
-            StartCoroutine(enumerateAionJsonData(www));
+            StartCoroutine(EnumerateAionJsonData(www));
         }
 
-        IEnumerator enumerateAionJsonData(UnityWebRequest www)
+        public IEnumerator EnumerateAionJsonData(UnityWebRequest www)
         {
             {
                 yield return www.SendWebRequest();  //send is deprecated, use SendWebRequest
