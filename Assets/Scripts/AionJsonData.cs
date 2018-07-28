@@ -9,7 +9,7 @@ namespace AionJsonData
 {
     public class AionJsonData : MonoBehaviour
     {
-        public List<DateTimeOffset> lPerformanceSampleCreatedTime = new List<DateTimeOffset>();
+        public List<DateTimeOffset> lPerformanceSampleCreatedTime = new List<DateTimeOffset>();         
         public List<string> lPerformanceSampleKeys = new List<string>();
         public List<string> lPerformanceKeys = new List<string>();
         public List<Worker> lPerformanceWorkers = new List<Worker>();
@@ -19,6 +19,16 @@ namespace AionJsonData
         public List<double> lPerfWorkerShares = new List<double>();
         public List<double> lPerfWorkerHashrate = new List<double>();
         //List<List<Worker>> llWorkers = new List<List<Worker>>();
+
+        public List<DateTimeOffset> GetDataTimes => lPerformanceSampleCreatedTime;        
+        public List<string> GetSampleKeys => lPerformanceSampleKeys;
+        public List<string> GetKeys => lPerformanceKeys;
+        public List<Worker> GetWorkers => lPerformanceWorkers;
+        public List<Worker> GetSampleWorkers => lPerformanceSampleWorkers;
+        public List<double> GetSamShares => lPerfSamWorkerShares;
+        public List<double> GetSamHashrate => lPerfSamWorkerHashrate;
+        public List<double> GetPerfWorkerShares => lPerfWorkerShares;
+        public List<double> GetPerfWorkerhashrate => lPerfWorkerHashrate;
 
         private void Start()
         {
